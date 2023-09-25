@@ -5,7 +5,7 @@
     tags = [ "top-level-intermediate" ]
 ) }}
 -- SQL model to cast each column to its adequate SQL type converted from the JSON schema type
--- depends_on: {{ ref('covid_epidemiology_ab1') }}
+-- depends_on: {{ ref('covid_ab1') }}
 select
     cast({{ adapter.quote('date') }} as {{ dbt_utils.type_string() }}) as {{ adapter.quote('date') }},
     cast(new_recovered as {{ dbt_utils.type_float() }}) as new_recovered,
@@ -20,7 +20,7 @@ select
     _airbyte_ab_id,
     _airbyte_emitted_at,
     {{ current_timestamp() }} as _airbyte_normalized_at
-from {{ ref('covid_epidemiology_ab1') }}
--- covid_epidemiology
+from {{ ref('covid_ab1') }}
+-- covid
 where 1 = 1
 

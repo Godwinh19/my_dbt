@@ -41,9 +41,6 @@ models:
       airbyte_views:
         +tags: airbyte_internal_views
         +materialized: view
-  datamart:
-    +schema: datamart
-    +materialized: table
 dispatch:
 - macro_namespace: dbt_utils
   search_order:
@@ -52,7 +49,7 @@ dispatch:
 vars:
   json_column: _airbyte_data
   models_to_source:
-    covid_epidemiology_ab1: public._airbyte_raw_covid_epidemiology
-    covid_epidemiology_ab2: public._airbyte_raw_covid_epidemiology
-    covid_epidemiology_ab3: public._airbyte_raw_covid_epidemiology
-    covid_epidemiology: public._airbyte_raw_covid_epidemiology
+    covid_ab1: public._airbyte_raw_covid
+    covid_ab2: public._airbyte_raw_covid
+    covid_ab3: public._airbyte_raw_covid
+    covid: public._airbyte_raw_covid

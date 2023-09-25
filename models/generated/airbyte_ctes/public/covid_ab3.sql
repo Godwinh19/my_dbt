@@ -5,7 +5,7 @@
     tags = [ "top-level-intermediate" ]
 ) }}
 -- SQL model to build a hash column based on the values of this record
--- depends_on: {{ ref('covid_epidemiology_ab2') }}
+-- depends_on: {{ ref('covid_ab2') }}
 select
     {{ dbt_utils.surrogate_key([
         adapter.quote('date'),
@@ -18,9 +18,9 @@ select
         'total_tested',
         'total_recovered',
         adapter.quote('key'),
-    ]) }} as _airbyte_covid_epidemiology_hashid,
+    ]) }} as _airbyte_covid_hashid,
     tmp.*
-from {{ ref('covid_epidemiology_ab2') }} tmp
--- covid_epidemiology
+from {{ ref('covid_ab2') }} tmp
+-- covid
 where 1 = 1
 

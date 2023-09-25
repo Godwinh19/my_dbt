@@ -7,7 +7,7 @@
                         set scd_table_relation = adapter.get_relation(
                             database=this.database,
                             schema=this.schema,
-                            identifier='covid_epidemiology_scd'
+                            identifier='covid_scd'
                         )
                     %}
                     {%
@@ -21,7 +21,7 @@
     tags = [ "top-level" ]
 ) }}
 -- Final base SQL model
--- depends_on: {{ ref('covid_epidemiology_ab3') }}
+-- depends_on: {{ ref('covid_ab3') }}
 select
     {{ adapter.quote('date') }},
     new_recovered,
@@ -35,8 +35,9 @@ select
     {{ adapter.quote('key') }},
     _airbyte_ab_id,
     _airbyte_emitted_at,
-    _airbyte_covid_epidemiology_hashid
-from {{ ref('covid_epidemiology_ab3') }}
--- covid_epidemiology from {{ source('public', '_airbyte_raw_covid_epidemiology') }}
+    {{ current_timestamp() }} as _airbyte_normalized_at,
+    _airbyte_covid_hashid
+from {{ ref('covid_ab3') }}
+-- covid from {{ source('public', '_airbyte_raw_covid') }}
 where 1 = 1
 
