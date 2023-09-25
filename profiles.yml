@@ -1,7 +1,7 @@
 my_dbt:
   outputs:
 
-    dev:
+    prod:
       type: postgres
       threads: 8
       host: localhost
@@ -11,7 +11,7 @@ my_dbt:
       dbname: postgres
       schema: public
 
-    prod:
+    dev:
       type: postgres
       threads: [1 or more]
       host: [host]
@@ -21,4 +21,4 @@ my_dbt:
       dbname: [dbname]
       schema: [prod_schema]
 
-  target: dev
+  target: prod
