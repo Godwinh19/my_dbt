@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: source_covid
+    schema: public
+    tables:
+      - name: raw_covid
+        identifier: _airbyte_raw_covid
+        description: Raw covid
