@@ -29,7 +29,7 @@ select
     total_deceased,
     new_deceased,
     new_confirmed,
-    total_confirmed,
+    total_confirmed as my_total_confirmed,
     total_tested,
     total_recovered,
     {{ adapter.quote('key') }},
