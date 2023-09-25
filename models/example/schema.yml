@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: covid
+  - name: covid_epid
     description: "A starter dbt model"
     columns:
       - name: id
