@@ -4,6 +4,6 @@ sources:
   - name: public
     schema: public
     tables:
-      - name: raw_covid
+      - name: _airbyte_raw_covid
         identifier: _airbyte_raw_covid
         description: Raw covid
