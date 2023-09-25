@@ -2,7 +2,7 @@ version: 2
 
 sources:
   - name: public
-    schema: public
+    schema: staging
     tables:
       - name: _airbyte_raw_covid
         identifier: _airbyte_raw_covid
