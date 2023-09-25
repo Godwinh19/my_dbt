@@ -1,6 +1,6 @@
 
 
-  create  table "postgres".public."covid__dbt_tmp"
+  create  table "postgres".public."covid_epidemiology__dbt_tmp"
   as (
 
 with __dbt__cte__covid_ab1 as (
