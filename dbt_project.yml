@@ -1,55 +1,37 @@
-name: airbyte_utils
-version: '1.0'
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'my_dbt'
+version: '1.0.0'
 config-version: 2
-profile: normalize
-model-paths:
-- models
-docs-paths:
-- docs
-analysis-paths:
-- analysis
-test-paths:
-- tests
-seed-paths:
-- data
-macro-paths:
-- macros
-target-path: ../build
-log-path: ../logs
-packages-install-path: /dbt
-clean-targets:
-- build
-- dbt_modules
-quoting:
-  database: true
-  schema: false
-  identifier: true
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'my_dbt'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
 models:
-  airbyte_utils:
-    +materialized: table
-    generated:
-      airbyte_ctes:
-        +tags: airbyte_internal_cte
-        +materialized: ephemeral
-      airbyte_incremental:
-        +tags: incremental_tables
-        +materialized: incremental
-        +on_schema_change: sync_all_columns
-      airbyte_tables:
-        +tags: normalized_tables
-        +materialized: table
-      airbyte_views:
-        +tags: airbyte_internal_views
-        +materialized: view
-dispatch:
-- macro_namespace: dbt_utils
-  search_order:
-  - airbyte_utils
-  - dbt_utils
-vars:
-  json_column: _airbyte_data
-  models_to_source:
-    covid_ab1: public._airbyte_raw_covid
-    covid_ab2: public._airbyte_raw_covid
-    covid_ab3: public._airbyte_raw_covid
-    covid: public._airbyte_raw_covid
+  my_dbt:
+    # Config indicated by + and applies to all files under models/example/
+    example:
+      +materialized: view
