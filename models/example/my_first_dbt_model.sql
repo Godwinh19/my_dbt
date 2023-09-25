@@ -12,7 +12,7 @@
 with source_data as (
     select new_recovered as recovered,
     _airbyte_ab_id as id,
-    FROM {{source('source_covid', 'raw_covid')}}
+    FROM {{source('public', 'raw_covid')}}
 
 )
 

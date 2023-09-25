@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: source_covid
+  - name: public
     schema: public
     tables:
       - name: raw_covid
