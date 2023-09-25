@@ -1,24 +1,17 @@
-my_dbt:
+config:
+  partial_parse: true
+  printer_width: 120
+  send_anonymous_usage_stats: false
+  use_colors: true
+normalize:
   outputs:
-
     prod:
-      type: postgres
-      threads: 8
-      host: localhost
-      port: 3000
-      user: postgres
-      pass: password
       dbname: postgres
+      host: localhost
+      pass: password
+      port: 3000
       schema: public
-
-    dev:
+      threads: 8
       type: postgres
-      threads: [1 or more]
-      host: [host]
-      port: [port]
-      user: [prod_username]
-      pass: [prod_password]
-      dbname: [dbname]
-      schema: [prod_schema]
-
+      user: postgres
   target: prod
