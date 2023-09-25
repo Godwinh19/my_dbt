@@ -1,57 +1,26 @@
-
-with __dbt__cte__covid_ab1 as (
-
--- SQL model to parse JSON blob stored in a single column and extract into separated field columns as described by the JSON Schema
--- depends_on: "postgres".public._airbyte_raw_covid
+{{ config(
+    indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
+    unique_key = '_airbyte_ab_id',
+    schema = "_airbyte_public",
+    tags = [ "top-level-intermediate" ]
+) }}
+-- SQL model to cast each column to its adequate SQL type converted from the JSON schema type
+-- depends_on: {{ ref('covid_ab1') }}
 select
-    jsonb_extract_path_text(_airbyte_data, 'date') as "date",
-    jsonb_extract_path_text(_airbyte_data, 'new_recovered') as new_recovered,
-    jsonb_extract_path_text(_airbyte_data, 'new_tested') as new_tested,
-    jsonb_extract_path_text(_airbyte_data, 'total_deceased') as total_deceased,
-    jsonb_extract_path_text(_airbyte_data, 'new_deceased') as new_deceased,
-    jsonb_extract_path_text(_airbyte_data, 'new_confirmed') as new_confirmed,
-    jsonb_extract_path_text(_airbyte_data, 'total_confirmed') as total_confirmed,
-    jsonb_extract_path_text(_airbyte_data, 'total_tested') as total_tested,
-    jsonb_extract_path_text(_airbyte_data, 'total_recovered') as total_recovered,
-    jsonb_extract_path_text(_airbyte_data, 'key') as "key",
+    cast({{ adapter.quote('date') }} as {{ dbt_utils.type_string() }}) as {{ adapter.quote('date') }},
+    cast(new_recovered as {{ dbt_utils.type_float() }}) as new_recovered,
+    cast(new_tested as {{ dbt_utils.type_float() }}) as new_tested,
+    cast(total_deceased as {{ dbt_utils.type_float() }}) as total_deceased,
+    cast(new_deceased as {{ dbt_utils.type_float() }}) as new_deceased,
+    cast(new_confirmed as {{ dbt_utils.type_float() }}) as new_confirmed,
+    cast(total_confirmed as {{ dbt_utils.type_float() }}) as total_confirmed,
+    cast(total_tested as {{ dbt_utils.type_float() }}) as total_tested,
+    cast(total_recovered as {{ dbt_utils.type_float() }}) as total_recovered,
+    cast({{ adapter.quote('key') }} as {{ dbt_utils.type_string() }}) as {{ adapter.quote('key') }},
     _airbyte_ab_id,
     _airbyte_emitted_at,
-    now() as _airbyte_normalized_at
-from "postgres".public._airbyte_raw_covid as table_alias
+    {{ current_timestamp() }} as _airbyte_normalized_at
+from {{ ref('covid_ab1') }}
 -- covid
 where 1 = 1
-) -- SQL model to cast each column to its adequate SQL type converted from the JSON schema type
--- depends_on: __dbt__cte__covid_ab1
-select
-    cast("date" as text) as "date",
-    cast(new_recovered as 
-    float
-) as new_recovered,
-    cast(new_tested as 
-    float
-) as new_tested,
-    cast(total_deceased as 
-    float
-) as total_deceased,
-    cast(new_deceased as 
-    float
-) as new_deceased,
-    cast(new_confirmed as 
-    float
-) as new_confirmed,
-    cast(total_confirmed as 
-    float
-) as total_confirmed,
-    cast(total_tested as 
-    float
-) as total_tested,
-    cast(total_recovered as 
-    float
-) as total_recovered,
-    cast("key" as text) as "key",
-    _airbyte_ab_id,
-    _airbyte_emitted_at,
-    now() as _airbyte_normalized_at
-from __dbt__cte__covid_ab1
--- covid
-where 1 = 1
+
