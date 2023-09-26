@@ -1,7 +1,7 @@
 {{ config(
    indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
    unique_key = 'id',
-   schema = "staging",
+   schema = "public",
    post_hook = ["
                     {%
                         set scd_table_relation = adapter.get_relation(
@@ -22,9 +22,10 @@
 ) }}
 
 select
- _airbyte_ab_id as id,
- new_recovered,
- new_tested,
- _airbyte_emitted_at,
+    {{ adapter.quote('date') }},
+     _airbyte_ab_id as id,
+     new_recovered,
+     new_tested,
+     _airbyte_emitted_at,
 from {{ ref('merged') }}
 where 1 = 1
