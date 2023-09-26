@@ -1,4 +1,7 @@
-
+{{ config(
+  materialized='table',
+  schema = "staging"
+) }}
 
 select
  _airbyte_ab_id as id,
