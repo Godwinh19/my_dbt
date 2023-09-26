@@ -1,5 +1,4 @@
 {{ config(
-  materialized='table',
   indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
   schema = "public"
    unique_key = 'id',
