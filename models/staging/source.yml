@@ -3,8 +3,8 @@ version: 2
 sources:
   - name: covid
     schema: staging
-    database: raw
+    database: true
     tables:
-      - name: _airbyte_raw_covid
-        identifier: _airbyte_raw_covid
-        description: Raw covid
+      - name: covid_normalized
+        identifier: covid
+        description: Normalized covid

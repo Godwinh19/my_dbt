@@ -13,7 +13,7 @@ with source_data as (
     select
         "new_recovered" as "recovered",
         "_airbyte_ab_id" as "id",
-    FROM {{ source('covid', '_airbyte_raw_covid') }}
+    FROM {{ source('covid', 'covid_normalized') }}
 )
 
 select *
