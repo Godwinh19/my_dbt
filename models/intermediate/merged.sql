@@ -23,7 +23,6 @@
 
 
 select
-    {{ adapter.quote('date') }},
     new_recovered,
     _airbyte_ab_id,
     _airbyte_emitted_at,
