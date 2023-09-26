@@ -4,7 +4,6 @@ version: 2
 models:
   - name: merged
     description: "A starter dbt model"
-    +schema: intermediate
     columns:
       - name: id
         description: "The primary key for this table"

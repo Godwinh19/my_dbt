@@ -37,5 +37,5 @@ select
     _airbyte_emitted_at,
     {{ current_timestamp() }} as _airbyte_normalized_at,
     _airbyte_covid_hashid
-from {{ source('covid', 'covid_raw') }}
+from {{ source('covid', 'covid_normalized') }}
 where 1 = 1
