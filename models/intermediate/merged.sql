@@ -1,7 +1,7 @@
 {{ config(
     indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
     unique_key = '_airbyte_ab_id',
-    schema = "public",
+    schema = "staging",
     post_hook = ["
                     {%
                         set scd_table_relation = adapter.get_relation(
@@ -23,8 +23,10 @@
 
 
 select
+    {{ adapter.quote('date') }},
     new_recovered,
     _airbyte_ab_id,
+    _airbyte_emitted_at,
     _airbyte_covid_hashid
 from {{ source('staging', 'covid_normalized') }}
 
