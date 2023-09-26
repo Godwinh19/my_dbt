@@ -39,5 +39,5 @@ models:
 dispatch:
 - macro_namespace: dbt_utils
   search_order:
-  - airbyte_utils
+  - my_dbt
   - dbt_utils
