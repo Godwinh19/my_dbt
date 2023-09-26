@@ -20,8 +20,7 @@
                         "],
     tags = [ "top-level" ]
 ) }}
--- Final base SQL model
--- depends_on: {{ ref('covid_ab3') }}
+
 select
     {{ adapter.quote('date') }},
     new_recovered,
