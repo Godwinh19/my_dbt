@@ -3,7 +3,6 @@ version: 2
 sources:
   - name: staging
     schema: staging
-    database: true
     tables:
       - name: covid_raw
         identifier: _airbyte_raw_covid
