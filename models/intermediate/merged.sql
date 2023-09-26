@@ -1,26 +1,41 @@
-
-/*
-    Welcome to your first dbt model!
-    Did you know that you can also configure models directly within SQL files?
-    This will override configurations stated in dbt_project.yml
-
-    Try changing "table" to "view" below
-*/
-
-{{ config(materialized='table', schema="intermediate") }}
-
-with source_data as (
-    select
-        "new_recovered" as "recovered",
-        "_airbyte_ab_id" as "id",
-    FROM {{ source('covid', 'covid_normalized') }}
-)
-
-select *
-from source_data
-
-/*
-    Uncomment the line below to remove records with null `id` values
-*/
-
-where id is not null
+{{ config(
+    indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
+    unique_key = '_airbyte_ab_id',
+    schema = "staging",
+    post_hook = ["
+                    {%
+                        set scd_table_relation = adapter.get_relation(
+                            database=this.database,
+                            schema=this.schema,
+                            identifier='covid_scd'
+                        )
+                    %}
+                    {%
+                        if scd_table_relation is not none
+                    %}
+                    {%
+                            do adapter.drop_relation(scd_table_relation)
+                    %}
+                    {% endif %}
+                        "],
+    tags = [ "top-level" ]
+) }}
+-- Final base SQL model
+-- depends_on: {{ ref('covid_ab3') }}
+select
+    {{ adapter.quote('date') }},
+    new_recovered,
+    new_tested,
+    total_deceased,
+    new_deceased,
+    new_confirmed,
+    total_confirmed,
+    total_tested,
+    total_recovered,
+    {{ adapter.quote('key') }},
+    _airbyte_ab_id,
+    _airbyte_emitted_at,
+    {{ current_timestamp() }} as _airbyte_normalized_at,
+    _airbyte_covid_hashid
+from {{ source('covid', 'covid_raw') }}
+where 1 = 1

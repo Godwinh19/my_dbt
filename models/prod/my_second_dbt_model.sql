@@ -3,5 +3,7 @@
   schema = "public"
 ) }}
 
-select *
+select
+ new_recovered,
+ new_tested,
 from {{ ref('merged') }}
