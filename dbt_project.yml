@@ -38,4 +38,5 @@ models:
       schema: intermediate
       materialized: table
     prod:
+      schema: public
       materialized: table
