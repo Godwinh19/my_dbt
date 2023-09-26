@@ -3,7 +3,7 @@
     Therefore, we revert the implementation here and add versions for missing destinations
 #}
 
-{% macro default__concat(fields) -%}
+{% macro concat(fields) -%}
   {{ adapter.dispatch('concat')(fields) }}
 {%- endmacro %}
 
