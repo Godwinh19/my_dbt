@@ -23,20 +23,9 @@
 
 
 select
-    {{ adapter.quote('date') }},
     new_recovered,
-    new_tested,
-    total_deceased,
-    new_deceased,
-    new_confirmed,
-    total_confirmed,
-    total_tested,
-    total_recovered,
-    {{ adapter.quote('key') }},
     _airbyte_ab_id,
     _airbyte_emitted_at,
-    {{ current_timestamp() }} as _airbyte_normalized_at,
-    _airbyte_covid_hashid
 from {{ source('staging', 'covid_normalized') }}
 
 where 1 = 1
