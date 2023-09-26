@@ -5,7 +5,7 @@ models:
   - name: merged
     description: "A starter dbt model"
     columns:
-      - name: id
+      - name: _airbyte_ab_id
         description: "The primary key for this table"
         tests:
           - unique
