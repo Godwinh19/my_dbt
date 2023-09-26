@@ -1,6 +1,5 @@
 {{ config(
   materialized='table',
-  schema = "staging"
 ) }}
 
 select
@@ -8,3 +7,4 @@ select
  new_recovered,
  new_tested,
 from {{ ref('merged') }}
+where 1 = 1

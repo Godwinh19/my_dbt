@@ -2,7 +2,7 @@
 version: 2
 
 models:
-  - name: my_second_dbt_model
+  - name: covid_dbt
     description: "A starter dbt model"
     columns:
       - name: id
