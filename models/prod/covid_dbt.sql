@@ -2,24 +2,8 @@
    indexes = [{'columns':['_airbyte_emitted_at'],'type':'btree'}],
    unique_key = 'id',
    schema = "public",
-   post_hook = ["
-                    {%
-                        set scd_table_relation = adapter.get_relation(
-                            database=this.database,
-                            schema=this.schema,
-                            identifier='covid_scd'
-                        )
-                    %}
-                    {%
-                        if scd_table_relation is not none
-                    %}
-                    {%
-                            do adapter.drop_relation(scd_table_relation)
-                    %}
-                    {% endif %}
-                        "],
-    tags = [ "top-level" ]
 ) }}
+
 
 select
     {{ adapter.quote('date') }},
